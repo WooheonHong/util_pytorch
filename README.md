@@ -3,10 +3,10 @@
 
 ## util_torch
 
-- my_tensorboard.py
+### my_tensorboard.py
 하이퍼파라미터 튜닝이 가능하도록 구성한 텐서보드 모듈 
 
-- torch_find_lr.py
+### torch_find_lr.py
 
 에폭 코스에 대해, 작은 학습율로 시작하고 각 미니 배치마다 높은 학습율로 증가시켜서 에폭의 끝에 높은 비율을 만들어 냅니다. 
 각 학습율에 대해 loss를 계산하고 가장 크게 감소하는 학습율을 선택합니다. 
@@ -19,11 +19,11 @@ fas.ai의 라이브러리에서 구현은 가중화된 smoothing을 포함하고
 
 이 모듈을 사용하여 찾아낸 학습률을 이용해서 transfer learning에서는 각 층마다 다른 학습률로 훈련시킬 수 있습니다. 
 
-- torch_datasplit.py
+### torch_datasplit.py
 training set, validation set, test set을 나눔 
 
 
-- torch_datasplit_directory.py
+### torch_datasplit_directory.py
 training set, validation set, test set을 디렉토리 단위로 나누고 미리 저장했기 때문에 load가 빠르고 랜덤성을 생각하지 않아도 된다. 
 
 
