@@ -61,7 +61,7 @@ class RunManager:
         self.train_loader = train_loader
         self.val_loader = val_loader
         self.tb = SummaryWriter(
-            self.save_dir, comment=f"-{run}", filename_suffix=self.filename_suffix
+            self.log_dir, comment=f"-{run}", filename_suffix=self.filename_suffix
         )
 
         if self.is_image:
