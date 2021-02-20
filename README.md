@@ -24,7 +24,7 @@ training set, validation set, test set을 나눕니다.
 
 
 ### torch_datasplit_directory.py
-training set, validation set, test set을 디렉토리 단위로 나누고 미리 저장했기 때문에 load가 빠르고 랜덤성을 생각하지 않아도 됩니다. 
+training set, validation set, test set을 디렉토리 단위로 나누고 미리 저장합니다. 따라서 load가 빠르고 split의 랜덤성을 하지 않아도 됩니다. 
 
 
 
