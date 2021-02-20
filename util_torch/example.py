@@ -1,4 +1,3 @@
-# %%
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -78,8 +77,6 @@ def train(model, params, epochs=20):
 
         manager.begin_run(run, model, train_loader, val_loader)
 
-        model = model.train()
-
         for epoch in range(epochs):
             manager.begin_epoch()
             model.train()
@@ -112,3 +109,4 @@ def train(model, params, epochs=20):
 
 
 train(model, params, epochs=20)
+
