@@ -20,11 +20,11 @@ fas.ai의 라이브러리에서 구현은 가중화된 smoothing을 포함하고
 이 모듈을 사용하여 찾아낸 학습률을 이용해서 transfer learning에서는 각 층마다 다른 학습률로 훈련시킬 수 있습니다. 
 
 ### torch_datasplit.py
-training set, validation set, test set을 나눔 
+training set, validation set, test set을 나눕니다. 
 
 
 ### torch_datasplit_directory.py
-training set, validation set, test set을 디렉토리 단위로 나누고 미리 저장했기 때문에 load가 빠르고 랜덤성을 생각하지 않아도 된다. 
+training set, validation set, test set을 디렉토리 단위로 나누고 미리 저장했기 때문에 load가 빠르고 랜덤성을 생각하지 않아도 됩니다. 
 
 
 
