@@ -1,3 +1,20 @@
+"""
+Over the course of an epoch, start out with a small learning rate 
+and increase to a higher learning rate over each mini-batch, 
+resulting in a high rate at the end of the epoch. Calculate the loss for each rate 
+and then, looking at a plot, pick the learning rate that gives the greatest decline
+
+------------------------------------usage----------------------------------------------
+(lrs, losses) = find_lr(transfer_model, torch.nn.CrossEntropyLoss(), 
+                        optimizer, train_data_loader,device=device)
+plt.plot(lrs, losses)
+
+plt.xscale("log")
+plt.xlabel("Learning rate")
+plt.ylabel("Loss")
+plt.show()
+"""
+
 import numpy as np
 import random
 import time
