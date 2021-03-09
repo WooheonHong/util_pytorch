@@ -1,18 +1,22 @@
-from setuptools import setup
+import io 
+from setuptools import find_packages, setup
+
+# Read in the README for the long description on PyPI
+def long_description():
+    with io.open('README.rst', 'r', encoding='utf-8') as f:
+        readme = f.read()
+    return readme
 
 setup(
     name='wooheon_master_lib',
     version='0.0.1',
-    decription='wooheon master code pip install'.
+    decription='wooheon master code pip install',
+    long_description=long_description(),
     url='https://github.com/WooheonHong/personal_master.git',
     author='Wooheon Hong',
     author_email='quasar103@naver.com',
     packages=['wooheon_master_lib'],
     zip_safe=False,
-    install_requires=[
-        torchvision==0.8.2
-        torch==1.7.1
-        numpy==1.19.5
-        torchaudio==0.7.0a0+a853dff
-    ]
+    packages=find_packages(),
+    license='MIT',
 )
