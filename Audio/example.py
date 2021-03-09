@@ -1,8 +1,6 @@
-데이터를 미리 저장시켜 놓고 사용한다.
+# 데이터를 미리 저장시켜 놓고 사용한다.
 
 # Preprocessing
-
-```
 import time
 import json
 import random
@@ -48,9 +46,8 @@ class Timer:
         h, m = divmod(m, 60)
         time_str = f"{h:02.0f}:{m:02.0f}:{s:02.0f}"
         return time_str
-```
 
-```
+
 PATH_TO_MNIST = Path.cwd() / "MNIST"
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
@@ -62,9 +59,8 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 #         [transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]
 #     ),
 # )
-```
 
-```
+
 def precompute_spectrogram(path, dpi=50):
     files = Path(path).glob("*.wav")
     for filename in files:
@@ -75,11 +71,11 @@ def precompute_spectrogram(path, dpi=50):
             log_spectrogram, sr=sample_rate, x_axis="time", y_axis="mel"
         )
         plt.gcf().savefig(f"{filename.parent}/{dpi}_{filename.name}.png", dpi=dpi)
-```
 
-## Frequncy Mask & Time Mask 
 
-```
+## Frequncy Mask & Time Mask
+
+
 class FrequencyMask(object):
     """
       Example:
@@ -117,9 +113,8 @@ class FrequencyMask(object):
 
         # return format_string
         return f"{self.__class__.name}(max_width={str(self.max_width)}, use_mean={str(self.use_mean)})"
-```
 
-```
+
 class TimeMask(object):
     """
         Example:
@@ -154,9 +149,8 @@ class TimeMask(object):
     def __repr__(self):
 
         return f"{self.__class__.__name__}'(max_width='{str(self.max_width)})'use_mean='{str(self.use_mean)})"
-```
 
-```
+
 class PrecomputedTransformESC50(Dataset):
     def __init__(
         self,
@@ -201,16 +195,13 @@ class PrecomputedTransformESC50(Dataset):
 
     def __len__(self):
         return self.length
-```
 
-```
+
 timer = Timer()
 precompute_spectrogram(Path.cwd() / "ESC-50" / "audio")
 PATH_TO_ESC50 = Path.cwd() / "ESC-50" / "audio"
 print(f"precompute spectrogram: {timer.get_time_hhmmss()}")
-```
 
-```
 # trian, val, test 디렉토리 생성
 timer.restart()
 split = make_directory_split(PATH_TO_ESC50)
@@ -226,22 +217,16 @@ timer.restart()
 esc50pre_val = PrecomputedTransformESC50(
     PATH_ESC50_VAL, max_freqmask_width=10, max_timemask_width=10
 )
-```
 
-```
 esc50_train_loader = torch.utils.data.DataLoader(esc50pre_train, 32, shuffle=True)
 esc50_val_loader = torch.utils.data.DataLoader(esc50pre_val, 32, shuffle=True)
-```
 
-```
-# find initial leraning rate 
+# find initial leraning rate
 model = torchvision.models.resnet50(True)
 for name, param in model.named_parameters():
     if "bn" not in name:
         param.requires_grad = False
-```
 
-```
 model.fc = nn.Sequential(
     nn.Linear(model.fc.in_features, 500), nn.ReLU(), nn.Dropout(), nn.Linear(500, 50),
 )
@@ -249,29 +234,23 @@ model.to(device)
 torch.save(model.state_dict(), "model_resnet50.pth")
 loss_fn = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
-```
 # Train
 
-Find initial learning rate 
-```
+# Find initial learning rate
 lrs, losses = find_lr(model, loss_fn, optimizer, esc50_train_loader, device=device)
 plt.plot(lrs, losses)
 plt.xscale("log")
 plt.xlabel("Learning rate")
 plt.ylabel("Loss")
 plt.show()
-```
 
-```
 model.load_state_dict(torch.load("model_resnet50.pth"))
 found_lr = 0.001
 params = OrderedDict(
     lr_tuning=[50, 100, 200], batch_size=[64], shuffle=[True], device=["cuda"],
 )
-```
 
-train for a few epochs that update only the classifier
-```
+# train for a few epochs that update only the classifier
 def train(model, optimizer, loss_fn, train_loader, val_loader, epochs=20, device="cpu"):
     for epoch in range(epochs):
         training_loss = 0.0
@@ -310,6 +289,7 @@ def train(model, optimizer, loss_fn, train_loader, val_loader, epochs=20, device
             accuracy = {num_correct / num_examples:.3f}"
         )
 
+
 optimizer = optim.Adam(model.parameters(), lr=found_lr)
 train(
     model,
@@ -320,9 +300,7 @@ train(
     epochs=5,
     device="cuda",
 )
-```
 
-```
 epochs = 20
 manager = RunManager(log_dir="test")
 
@@ -384,4 +362,3 @@ for run in RunBuilder.get_runs(params):
         manager.end_epoch()
     manager.end_run()
 manager.save("results")
-```
