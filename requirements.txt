@@ -1,0 +1,4 @@
+torchvision==0.8.2
+torch==1.7.1
+numpy==1.19.5
+torchaudio==0.7.0a0+a853dff
