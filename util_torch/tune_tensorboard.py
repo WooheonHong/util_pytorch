@@ -31,15 +31,16 @@ class RunBuilder:
 
 
 class RunManager:
-    def __init__(self, log_dir=None, filename_suffix="", is_image=False):
+    def __init__(self, log_dir=None, filename_suffix="", is_clf=True, is_image=False):
         self.log_dir = log_dir
         self.filename_suffix = filename_suffix
+        self.is_clf = is_clf
         self.is_image = is_image
 
         self.epoch_count = 0
         self.train_epoch_loss = 0
         self.val_epoch_loss = 0
-        self.val_epoch_num_correct = 0
+        self.val_epoch_num_correct = 0  # only use when clf
         self.epoch_start_time = None
 
         self.run_params = None
@@ -100,9 +101,11 @@ class RunManager:
             m.register_forward_hook(partial(send_stats, i))
 
         val_loss = self.val_epoch_loss / len(self.val_loader.dataset)
-        val_accuracy = self.val_epoch_num_correct / len(self.val_loader.dataset)
         self.tb.add_scalar("Validation Loss", val_loss, self.epoch_count)
-        self.tb.add_scalar("Accuracy", val_accuracy, self.epoch_count)
+
+        if self.is_clf:
+            val_accuracy = self.val_epoch_num_correct / len(self.val_loader.dataset)
+            self.tb.add_scalar("Accuracy", val_accuracy, self.epoch_count)
 
         for name, param in self.network.named_parameters():
             self.tb.add_histogram(name, param, self.epoch_count)
@@ -138,15 +141,17 @@ class RunManager:
     def track_num_correct(self, preds, labels, is_train=False):
         self.val_epoch_num_correct += self._get_num_correct(preds, labels)
 
+    def add_performance(self, performance_metrics):
+        for key, value in performance_metrics:
+            self.tb.add_scalar(key, value, self.epoch_count)
+
     @torch.no_grad()
     def _get_num_correct(self, preds, labels):
         return preds.argmax(dim=1).eq(labels).sum().item()
 
     def save(self, fileName):
 
-        pd.DataFrame.from_dict(self.run_data, orient="columns").to_csv(
-            f"{fileName}.csv"
-        )
+        pd.DataFrame.from_dict(self.run_data, orient="columns").to_csv(f"{fileName}.csv")
 
         with open(f"{fileName}.json", "w", encoding="utf-8") as f:
             json.dump(self.run_data, f, ensure_ascii=False, indent=4)
