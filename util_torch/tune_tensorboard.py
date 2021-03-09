@@ -121,7 +121,8 @@ class RunManager:
         results["epoch"] = self.epoch_count
         results["train_loss"] = train_loss
         results["val_loss"] = val_loss
-        results["accuracy"] = val_accuracy
+        if self.is_clf:
+            results["accuracy"] = val_accuracy
         results["epoch duration"] = epoch_duration
         results["run duration"] = run_duration
         for k, v in self.run_params._asdict().items():
@@ -142,7 +143,7 @@ class RunManager:
         self.val_epoch_num_correct += self._get_num_correct(preds, labels)
 
     def add_performance(self, performance_metrics):
-        for key, value in performance_metrics:
+        for key, value in performance_metrics.items():
             self.tb.add_scalar(key, value, self.epoch_count)
 
     @torch.no_grad()
