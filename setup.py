@@ -12,7 +12,7 @@ setup(
     name="wooheon_master_lib",
     version="0.0.1",
     decription="wooheon master code pip install",
-    long_description=long_description(),
+    # long_description=long_description(),
     url="https://github.com/WooheonHong/personal_master.git",
     author="Wooheon Hong",
     author_email="quasar103@naver.com",
