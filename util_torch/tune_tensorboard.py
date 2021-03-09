@@ -93,12 +93,12 @@ class RunManager:
         train_loss = self.train_epoch_loss / len(self.train_loader.dataset)
         self.tb.add_scalar("Training Loss", train_loss, self.epoch_count)
 
-        def send_stats(i, module, input, output):
-            self.tb.add_scalar(f"layer {i}-mean", output.data.mean())
-            self.tb.add_scalar(f"layer {i}-stddev", output.data.std())
+        # def send_stats(i, module, input, output):
+        #     self.tb.add_scalar(f"layer {i}-mean", output.data.mean())
+        #     self.tb.add_scalar(f"layer {i}-stddev", output.data.std())
 
-        for i, m in enumerate(self.network.children()):
-            m.register_forward_hook(partial(send_stats, i))
+        # for i, m in enumerate(self.network.children()):
+        #     m.register_forward_hook(partial(send_stats, i))
 
         val_loss = self.val_epoch_loss / len(self.val_loader.dataset)
         self.tb.add_scalar("Validation Loss", val_loss, self.epoch_count)
