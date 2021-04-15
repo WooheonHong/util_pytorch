@@ -1,4 +1,4 @@
-# personal_master
+# util_pytorch
 석사과정으로 있을 때 진행한 프로젝트 및 유용한 코드 모음 
 
 ## util_torch
@@ -20,11 +20,17 @@ fas.ai의 라이브러리에서 구현은 가중화된 smoothing을 포함하고
 이 모듈을 사용하여 찾아낸 학습률을 이용해서 transfer learning에서는 각 층마다 다른 학습률로 훈련시킬 수 있습니다. 
 
 ### torch_datasplit.py
+- class DataSplit
+
 training set, validation set, test set을 나눕니다. 
+
+- function make_directory_split
+
+training set, validation set, test set을 디렉토리 단위로 나누고 미리 저장합니다. 따라서 load가 빠르고 split의 랜덤성을 하지 않아도 됩니다. 
 
 
 ### torch_datasplit_directory.py
-training set, validation set, test set을 디렉토리 단위로 나누고 미리 저장합니다. 따라서 load가 빠르고 split의 랜덤성을 하지 않아도 됩니다. 
+
 
 
 ## Audio 
