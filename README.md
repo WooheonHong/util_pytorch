@@ -28,6 +28,7 @@ training set, validation set, test set을 나눕니다.
 
 training set, validation set, test set을 디렉토리 단위로 나누고 미리 저장합니다. 따라서 load가 빠르고 split의 랜덤성을 하지 않아도 됩니다. 
 
+주의: mnist같은 데이터는 train=True, train=False를 사용해야하기 때문에 이 모듈의 함수들을 사용하지 말것.
 
 ### torch_datasplit_directory.py
 

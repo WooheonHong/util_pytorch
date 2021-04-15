@@ -68,6 +68,7 @@ class RunManager:
 
         images, labels = next(iter(self.train_loader))
         self.tb.add_graph(self.network, images.to(getattr(run, "device", "cpu")))
+        # Because of above code, It should be initialized with params = OrderedDict(device=["cuda"])
 
         if self.is_image:
             grid = torchvision.utils.make_grid(images)
