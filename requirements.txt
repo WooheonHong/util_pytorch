@@ -1,4 +1,9 @@
+torchaudio==0.7.0a0+a853dff
 torchvision==0.8.2
-torch==1.7.1
+pandas==1.2.3
 numpy==1.19.5
-torchaudio==0.7
+torch==1.8.0
+librosa==0.8.0
+matplotlib==3.3.4
+ipython==7.22.0
+Pillow==8.2.0
