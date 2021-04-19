@@ -31,9 +31,8 @@ class RunBuilder:
 
 
 class RunManager:
-    def __init__(self, log_dir=None, filename_suffix="", is_clf=True, is_image=False):
+    def __init__(self, log_dir=None, is_clf=True, is_image=False):
         self.log_dir = log_dir
-        self.filename_suffix = filename_suffix
         self.is_clf = is_clf
         self.is_image = is_image
 
@@ -52,7 +51,7 @@ class RunManager:
         self.loader = None
         self.tb = None
 
-    def begin_run(self, run, network, train_loader, val_loader=None):
+    def begin_run(self, run, network, train_loader, val_loader=None, filename_suffix=""):
 
         self.run_start_time = time.time()
 
@@ -63,7 +62,7 @@ class RunManager:
         self.train_loader = train_loader
         self.val_loader = val_loader
         self.tb = SummaryWriter(
-            self.log_dir, comment=f"-{run}", filename_suffix=self.filename_suffix
+            self.log_dir, comment=f"-{run}", filename_suffix=filename_suffix
         )
 
         images, labels = next(iter(self.train_loader))
