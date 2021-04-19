@@ -31,8 +31,8 @@ class RunBuilder:
 
 
 class RunManager:
-    def __init__(self, log_dir=None, is_clf=True, is_image=False):
-        self.log_dir = log_dir
+    def __init__(self, is_clf=True, is_image=False):
+        self.log_dir = None
         self.is_clf = is_clf
         self.is_image = is_image
 
@@ -51,12 +51,15 @@ class RunManager:
         self.loader = None
         self.tb = None
 
-    def begin_run(self, run, network, train_loader, val_loader=None, filename_suffix=""):
+    def begin_run(
+        self, log_dir, run, network, train_loader, val_loader=None, filename_suffix=""
+    ):
 
         self.run_start_time = time.time()
-
         self.run_params = run
         self.run_count += 1
+
+        self.log_dir = log_dir
 
         self.network = network
         self.train_loader = train_loader
